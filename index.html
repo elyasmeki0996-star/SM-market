@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elias Escrow - Secure Sign-In</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <div id="auth-gate" class="auth-wrapper">
+    <div class="auth-card">
+      <div class="logo">Elias<span>Escrow</span></div>
+      <h2>Create Your Secure Account</h2>
+      <p class="auth-subtitle">Verify your identity to access the social media marketplace.</p>
+      
+      <form id="signup-form" onsubmit="handleAuthSignUp(event)">
+        <label>Email Address</label>
+        <input type="email" id="gate-email" placeholder="example@gmail.com" required>
+
+        <label>Password</label>
+        <input type="password" id="gate-password" placeholder="Create a strong password" required>
+
+        <button type="submit" class="btn-primary" style="width: 100%; margin-top: 15px;">Register Account</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="verify-gate" class="auth-wrapper hidden">
+    <div class="auth-card text-center">
+      <div class="email-icon">📩</div>
+      <h2>Check Your Inbox</h2>
+      <p>We sent a secure confirmation link to <strong id="registered-email" class="highlight">user@mail.com</strong>.</p>
+      <p class="verification-note">Your account is locked until you click that link. Please check your spam folder if you don't see it in 2 minutes.</p>
+      
+      <button onclick="simulateSuccessfulVerification()" class="btn-secondary">Simulate Email Verification Link Click</button>
+    </div>
+  </div>
+
+  <div id="main-portal" class="app-container hidden">
+    <header class="header">
+      <div class="logo">Elias<span>Escrow</span></div>
+      <div class="auth-section">
+        <span class="verified-badge">✅ Verified Member</span>
+      </div>
+    </header>
+
+    <section class="hero">
+      <h1>Secure Social Media Marketplace</h1>
+      <p>Now that you are verified, you can search and buy active digital channels securely.</p>
+    </section>
+
+    <main class="main-grid">
+      <section class="card">
+        <h2>Sell Your Channel</h2>
+        <p class="subtitle">Submit details. Elias will verify, list it, and handle the payout.</p>
+        <form id="sell-form" onsubmit="handleFormSubmit(event)">
+          <label>Platform</label>
+          <select id="platform" required>
+            <option value="TikTok">TikTok</option>
+            <option value="YouTube">YouTube</option>
+            <option value="Telegram">Telegram</option>
+            <option value="Instagram">Instagram</option>
+          </select>
+
+          <label>Channel Name/Handle</label>
+          <input type="text" id="channel-name" placeholder="@example_channel" required>
+
+          <label>Followers / Members</label>
+          <input type="number" id="followers" placeholder="e.g. 15000" required>
+
+          <label>Your Price (ETB)</label>
+          <input type="number" id="price" placeholder="Price in Birr" oninput="calculateLiveCommission()" required>
+
+          <div class="calc-box">
+            <div>Elias Commission: <span id="calc-comm" class="highlight">0 ETB</span></div>
+            <div>Your Payout: <span id="calc-payout">0 ETB</span></div>
+          </div>
+
+          <button type="submit" class="btn-primary">Submit Listing</button>
+        </form>
+      </section>
+
+      <section class="card">
+        <h2>Active Listings</h2>
+        <p class="subtitle">Browse safe accounts. Contact Elias on Telegram to secure purchase.</p>
+        <div id="listings-container" class="listings-grid">
+          </div>
+      </section>
+    </main>
+  </div>
+
+</body>
+</html>
